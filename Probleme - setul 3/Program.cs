@@ -222,6 +222,49 @@ namespace Probleme___setul_3
                 Console.Write($"{B[i]} ");
             }
         }
+        static void p8()
+        {
+            Console.WriteLine("Introduceti lungimea vectorului:");
+            int n = int.Parse(Console.ReadLine());
+            int[] A = Test(n);
+            int k = A[0];
+            for (int i = 0; i < n - 1; i++)
+            {
+                A[i] = A[i + 1];
+            }
+            A[n - 1] = k;
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write($"{A[i]} ");
+            }
+        }
+        static void p9()
+        {
+            Console.WriteLine("Introduceti lungimea vectorului:");
+            int n = int.Parse(Console.ReadLine());
+            Console.WriteLine("Introduceti valoarea lui k:");
+            int k = int.Parse(Console.ReadLine());
+            int[] A = Test(n);
+            int[] B = new int[n];
+            int temp = n - k;
+            int j = 0;
+            for (int i = k; i < n; i++)
+            {
+                B[j] = A[i];
+                j++;
+            }
+            for (int i = 0; i < k; i++)
+            {
+                B[j] = A[i];
+                j++;
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write($"{B[i]} ");
+            }
+        }
         static void Main(string[] args)
         {
             {
@@ -265,12 +308,12 @@ namespace Probleme___setul_3
                 if (nrp == 8)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p8();
+                    p8();
                 }
                 if (nrp == 9)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p9();
+                    p9();
                 }
                 if (nrp == 10)
                 {
