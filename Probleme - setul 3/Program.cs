@@ -19,6 +19,21 @@ namespace Probleme___setul_3
             }
             return A;
         }
+        static int[] TestCrescator(int n)
+        {
+            Random rnd = new Random();
+            int[] A = new int[n];
+            A[0] = rnd.Next(1, n);
+            for (int i = 1; i < n; i++)
+            {
+                A[i] = rnd.Next(A[i - 1] + 1, A[i - 1] + 30);
+            }
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write($"{A[i]} ");
+            }
+            return A;
+        }
         static void p1()
         {
             int n = int.Parse(Console.ReadLine());
@@ -265,6 +280,132 @@ namespace Probleme___setul_3
                 Console.Write($"{B[i]} ");
             }
         }
+        static void p10()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = TestCrescator(n);
+            Console.WriteLine("Introduceti valoarea lui k:");
+            int k = int.Parse(Console.ReadLine());
+            int left = 0;
+            int right = A.Length - 1;
+            while (left <= right)
+            {
+                int mid = (left + right) / 2;
+                if (k == A[mid])
+                {
+                    Console.WriteLine($"Pozitia lui k este:{mid}");
+                    return;
+                }
+                else if (k < A[mid])
+                {
+                    right = mid - 1;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+            Console.WriteLine(-1);
+        }
+        static void p11()
+        {
+            int n = int.Parse(Console.ReadLine());
+            bool[] A = new bool[n];
+            for (int i = 2; i < n; i++)
+            {
+                if (A[i] == false)
+                for (int j = i + i; j < n; j += i)
+                {
+                        A[j] = true;
+                }
+            }
+            Console.WriteLine();
+            for (int i = 2; i < n; i++)
+            {
+                if (!A[i])
+                    Console.Write($"{i} ");
+            }
+        }
+        static void p12()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = Test(n);
+            for (int i = 0; i < n - 1; i++)
+            {
+                int min = i;
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (A[j] < A[min])
+                    {
+                        min = j;
+                    }
+                }
+
+                int temp = A[min];
+                A[min] = A[i];
+                A[i] = temp;
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+                Console.Write($"{A[i]} ");
+        }
+        static void p13()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = Test(n);
+            for (int i = 1; i < n; ++i)
+            {
+                int key = A[i];
+                int j = i - 1;
+                while (j >= 0 && A[j] > key)
+                {
+                    A[j + 1] = A[j];
+                    j = j - 1;
+                }
+                A[j + 1] = key;
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+                Console.Write($"{A[i]} ");
+        }
+        static void p14()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            string[] t = Console.ReadLine().Split(' ');
+            int nonZeroPointer = 0;
+            for (int i = 0; i < n; i++)
+            {
+                A[i] = int.Parse(t[i]);
+            }
+            for (int i = 0; i < n; i++)
+            {
+                if (A[i] != 0)
+                {
+                    int temp = A[nonZeroPointer];
+                    A[nonZeroPointer] = A[i];
+                    A[i] = temp;
+                    nonZeroPointer++;
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+                Console.Write($"{A[i]} ");
+        }
+        static void p15()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            string[] t = Console.ReadLine().Split(' ');
+            for (int i = 0; i < n; i++)
+            {
+                A[i] = int.Parse(t[i]);
+            }
+            A = A.Distinct().ToArray();
+            Console.WriteLine();
+            for (int i = 0; i < A.Length; i++)
+                Console.Write($"{A[i]} ");
+        }
         static void Main(string[] args)
         {
             {
@@ -318,32 +459,32 @@ namespace Probleme___setul_3
                 if (nrp == 10)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p10();
+                    p10();
                 }
                 if (nrp == 11)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p11();
+                    p11();
                 }
                 if (nrp == 12)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p12();
+                    p12();
                 }
                 if (nrp == 13)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p13();
+                    p13();
                 }
                 if (nrp == 14)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p14();
+                    p14();
                 }
                 if (nrp == 15)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p15();
+                    p15();
                 }
                 if (nrp == 16)
                 {
