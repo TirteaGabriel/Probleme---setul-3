@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,36 @@ namespace Probleme___setul_3
                 Console.Write($"{A[i]} ");
             }
             return A;
+        }
+        static double val(double[] P, double x)
+        {
+            double suma = 0;
+            for (int i = 0; i < P.Length; i++)
+                suma += P[i] * Math.Pow(x, i);
+            return suma;
+        }
+        static int check(int[] s1, int[] s2)
+        {
+            int min = s1.Length;
+            if (s2.Length < min) min = s2.Length;
+            for (int i = 0; i < min; i++)
+                if (s1[i] != s2[i])
+                {
+                    if (s1[i] > s2[i])
+                        return 1;
+                    else
+                        return -1;
+                }
+            if (s1.Length == min && s2.Length == min)
+                return 0;
+            if (s1.Length == min)
+                return -1;
+            else
+            if (s2.Length == min)
+                return 1;
+            else
+                return 0;
+
         }
         static void p1()
         {
@@ -406,6 +437,299 @@ namespace Probleme___setul_3
             for (int i = 0; i < A.Length; i++)
                 Console.Write($"{A[i]} ");
         }
+        static void p16()
+        {
+            /*int n = int.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            string[] t = Console.ReadLine().Split(' ');
+            for (int i = 0; i < n; i++)
+            {
+                A[i] = int.Parse(t[i]);
+            }*/
+            int n = int.Parse(Console.ReadLine());
+            int[] A = Test(n);
+            int a = A[0];
+            int b, r;
+            for (int i = 1; i < n; i++)
+            {
+                r = a % A[i];
+                while (r > 0)
+                {
+                    a = A[i];
+                    A[i] = r;
+                    r = a % A[i];
+                }
+                a = A[i];
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Cmmdc al vectorului este {a}");
+        }
+        static void p17()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int b = int.Parse(Console.ReadLine());
+            int[] A = new int[32];
+            int i = 0;
+            while (n > 0)
+            {
+                A[i] = n % b;
+                n /= b;
+                i++;
+            }
+            for (int j = i - 1; j >= 0; j--)
+                Console.Write($"{A[j]} ");
+        }
+        static void p18()
+        {
+            TextReader load = new StreamReader(@"..\..\Resurse\polinom.txt");
+
+            int n = int.Parse(load.ReadLine());
+            double[] P = new double[n];
+            string[] t = load.ReadLine().Split(' ');
+            for (int i = 0; i < n; i++)
+            {
+                P[i] = double.Parse(t[i]);
+            }
+            double x = double.Parse(load.ReadLine());
+            Console.Write(val(P, x).ToString());
+        }
+        static void p19()
+        {
+            TextReader load = new StreamReader(@"..\..\Resurse\vectori.txt");
+
+            string[] t1 = load.ReadLine().Split(' ');
+            int[] s = new int[t1.Length];
+            for (int i = 0; i < t1.Length; i++)
+                s[i] = int.Parse(t1[i]);
+
+            string[] t2 = load.ReadLine().Split(' ');
+            int[] p = new int[t2.Length];
+            for (int i = 0; i < t2.Length; i++)
+                p[i] = int.Parse(t2[i]);
+            int nr = 0;
+            for (int i = 0; i < s.Length - p.Length + 1; i++)
+            {
+                if (s[i] == p[0])
+                {
+                    bool ok = true;
+                    for (int j = 1; j < p.Length; j++)
+                        if (p[j] != s[i + j])
+                            ok = false;
+                    if (ok) nr++;
+                }
+            }
+            Console.WriteLine();
+            Console.Write($"p apare in s de {nr} ori");
+        }
+        static void p20()
+        {
+            TextReader load = new StreamReader(@"..\..\Resurse\margele.txt");
+
+            string[] t1 = load.ReadLine().Split(' ');
+            int[] s1 = new int[t1.Length];
+            for (int i = 0; i < t1.Length; i++)
+                s1[i] = int.Parse(t1[i]);
+
+            string[] t2 = load.ReadLine().Split(' ');
+            int[] s2 = new int[t2.Length];
+            for (int i = 0; i < t2.Length; i++)
+                s2[i] = int.Parse(t2[i]);
+            int max = 0;
+            for (int i = 0; i < s1.Length; i++)
+            {
+                int s = 0;
+                for (int j = 0; j < s2.Length; j++)
+                    if (s1[(i + j) % s1.Length] == s2[j])
+                        s++;
+                if (s > max) max = s;
+            }
+            Console.Write(max);
+        }
+        static void p21()
+        {
+            string[] t1 = Console.ReadLine().Split(' ');
+            int[] s1 = new int[t1.Length];
+            for (int i = 0; i < t1.Length; i++)
+                s1[i] = int.Parse(t1[i]);
+            string[] t2 = Console.ReadLine().Split(' ');
+            int[] s2 = new int[t1.Length];
+            for (int i = 0; i < t2.Length; i++)
+                s2[i] = int.Parse(t2[i]);
+            Console.Write(check(s1, s2));
+        }
+        static void p22()
+        {
+            string[] t1 = Console.ReadLine().Split(' ');
+            int[] v1 = new int[t1.Length];
+            for (int i = 0; i < t1.Length; i++)
+                v1[i] = int.Parse(t1[i]);
+            string[] t2 = Console.ReadLine().Split(' ');
+            int[] v2 = new int[t2.Length];
+            for (int i = 0; i < t2.Length; i++)
+                v2[i] = int.Parse(t2[i]);
+            int lungime = t1.Length + t2.Length;
+            int[] N = new int[lungime];
+            int[] U = new int[lungime];
+            int[] D1 = new int[lungime];
+            int[] D2 = new int[lungime];
+            int a = 0, nl = 0;
+            for (int i = 0; i < t1.Length; i++)
+            {
+                for (int j = 0; j < t2.Length; j++)
+                    if (v1[i] == v2[j])
+                    {
+                        N[a++] = v1[i];
+                        nl++;
+                    }
+            }
+            for (a = 0; a < nl; a++)
+                Console.Write(N[a] + " ");
+            Console.WriteLine();
+
+            int b = 0;
+            for (int i = 0; i < t1.Length; i++)
+            {
+                U[b++] = v1[i];
+            }
+            for (int i = 0; i < t2.Length; i++)
+            {
+                U[b++] = v2[i];
+            }
+            for (b = 0; b < lungime; b++)
+                Console.Write(U[b] + " ");
+            Console.WriteLine();
+
+            int c = 0;
+            for (int i = 0; i < t1.Length; i++)
+            {
+                bool d1 = true;
+                for (int j = 0; j < t2.Length; j++)
+                {
+
+                    if (v1[i] == v2[j])
+                    {
+                        d1 = false;
+                    }
+
+                }
+                if (d1)
+                {
+                    D1[c] = v1[i];
+                    c++;
+                }
+            }
+            for (int i = 0; i < c; i++)
+                Console.Write(D1[i] + " ");
+            Console.WriteLine();
+
+            int d = 0;
+            for (int i = 0; i < t2.Length; i++)
+            {
+                bool d2 = true;
+                for (int j = 0; j < t1.Length; j++)
+                {
+
+                    if (v2[i] == v1[j])
+                    {
+                        d2 = false;
+                    }
+                }
+                if (d2)
+
+                    D2[d++] = v2[i];
+            }
+            for (int i = 0; i < d; i++)
+                Console.Write(D2[i] + " ");
+
+        }
+        static void p23()
+        {
+            string[] t1 = Console.ReadLine().Split(' ');
+            int[] v1 = new int[t1.Length];
+            for (int i = 0; i < t1.Length; i++)
+                v1[i] = int.Parse(t1[i]);
+            string[] t2 = Console.ReadLine().Split(' ');
+            int[] v2 = new int[t2.Length];
+            for (int i = 0; i < t2.Length; i++)
+                v2[i] = int.Parse(t2[i]);
+            int lungime = t1.Length + t2.Length;
+            int[] N = new int[lungime];
+            int[] U = new int[lungime];
+            int[] D1 = new int[lungime];
+            int[] D2 = new int[lungime];
+            int a = 0, nl = 0;
+            for (int i = 0; i < t1.Length; i++)
+            {
+                for (int j = 0; j < t2.Length; j++)
+                    if (v1[i] == v2[j])
+                    {
+                        N[a++] = v1[i];
+                        nl++;
+                    }
+            }
+            for (a = 0; a < nl; a++)
+                Console.Write(N[a] + " ");
+            Console.WriteLine();
+
+            int b = 0;
+            for (int i = 0; i < t1.Length; i++)
+            {
+                U[b++] = v1[i];
+            }
+            for (int i = 0; i < t2.Length; i++)
+            {
+                U[b++] = v2[i];
+            }
+            for (b = 0; b < lungime; b++)
+                Console.Write(U[b] + " ");
+            Console.WriteLine();
+
+            int c = 0;
+            for (int i = 0; i < t1.Length; i++)
+            {
+                bool d1 = true;
+                for (int j = 0; j < t2.Length; j++)
+                {
+
+                    if (v1[i] == v2[j])
+                    {
+                        d1 = false;
+                    }
+
+                }
+                if (d1)
+                {
+                    D1[c] = v1[i];
+                    c++;
+                }
+            }
+            for (int i = 0; i < c; i++)
+                Console.Write(D1[i] + " ");
+            Console.WriteLine();
+
+            int d = 0;
+            for (int i = 0; i < t2.Length; i++)
+            {
+                bool d2 = true;
+                for (int j = 0; j < t1.Length; j++)
+                {
+
+                    if (v2[i] == v1[j])
+                    {
+                        d2 = false;
+                    }
+                }
+                if (d2)
+
+                    D2[d++] = v2[i];
+            }
+            for (int i = 0; i < d; i++)
+                Console.Write(D2[i] + " ");
+
+        }
+
+
+
         static void Main(string[] args)
         {
             {
@@ -489,42 +813,42 @@ namespace Probleme___setul_3
                 if (nrp == 16)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p16();
+                    p16();
                 }
                 if (nrp == 17)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p17();
+                    p17();
                 }
                 if (nrp == 18)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p18();
+                    p18();
                 }
                 if (nrp == 19)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p19();
+                    p19();
                 }
                 if (nrp == 20)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p20();
+                    p20();
                 }
                 if (nrp == 21)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p21();
+                    p21();
                 }
                 if (nrp == 22)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p22();
+                    p22();
                 }
                 if (nrp == 23)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p23();
+                    p23();
                 }
                 if (nrp == 24)
                 {
