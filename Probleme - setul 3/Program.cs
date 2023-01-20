@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace Probleme___setul_3
 {
@@ -727,7 +729,95 @@ namespace Probleme___setul_3
                 Console.Write(D2[i] + " ");
 
         }
+        static void p25()
+        {
+            string[] t1 = Console.ReadLine().Split(' ');
+            int[] v1 = new int[t1.Length];
+            for (int i = 0; i < t1.Length; i++)
+                v1[i] = int.Parse(t1[i]);
+            string[] t2 = Console.ReadLine().Split(' ');
+            int[] v2 = new int[t2.Length];
+            for (int i = 0; i < t2.Length; i++)
+                v2[i] = int.Parse(t2[i]);
+            int[] F = new int[t1.Length + t2.Length];
+            int f = 0;
 
+            for (int i = 0; i < t1.Length; i++)
+            {
+                F[f++] = v1[i];
+            }
+            for (int i = 0; i < t2.Length; i++)
+            {
+                F[f++] = v2[i];
+            }
+            int key, j;
+            for (int i = 1; i < t1.Length + t2.Length; i++)
+            {
+                key = F[i];
+                j = i - 1;
+                while (j >= 0 && F[j] > key)
+                {
+                    F[j + 1] = F[j];
+                    j--;
+                }
+                F[j + 1] = key;
+            }
+            for (int i = 0; i < t1.Length + t2.Length; i++)
+                Console.Write(F[i] + " ");
+        }
+        static void p26()
+        {
+            Console.WriteLine("Introduceti un numar mare:");
+            string number1 = Console.ReadLine();
+            int[] num1 = new int[number1.Length];
+            int i = 0;
+            foreach (char c in number1)
+            {
+                num1[i] = c - '0';
+                i++;
+            }
+            Console.WriteLine("Introduceti un numar mare:");
+            string number2 = Console.ReadLine();
+            int[] num2 = new int[number1.Length];
+            i = 0;
+            foreach (char c in number1)
+            {
+                num2[i] = c - '0';
+                i++;
+            }
+            //adunare
+            
+            //produsul
+            for (i = num1.Length - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < num2.Length; j++)
+                {
+
+                }
+            }
+
+
+        }
+        static int[] suma(int[] num1, int[] num2)
+        {
+            int n = Math.Max(num1.Length, num2.Length);
+            int[] suma = new int[n + 1];
+            int k = n;
+            for (int i = num1.Length - 1, j = num2.Length - 1; i > 0 || j > 0; i--, j--)
+            {
+                if (num1[i] + num2[j] > 9)
+                {
+                    int s = num1[i] + num2[j];
+                    suma[k] = s % 10;
+                    suma[k - 1]++;
+                }
+                else
+                {
+                    suma[k] = num1[i] + num2[i];
+                }
+            }
+            return suma;
+        }
 
 
         static void Main(string[] args)
@@ -858,12 +948,12 @@ namespace Probleme___setul_3
                 if (nrp == 25)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p25();
+                    p25();
                 }
                 if (nrp == 26)
                 {
                     Console.WriteLine("Problema " + nrp);
-                    //p26();
+                    p26();
                 }
                 if (nrp == 27)
                 {
